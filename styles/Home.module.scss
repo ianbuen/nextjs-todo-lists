@@ -1,10 +1,12 @@
 .container {
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center;    
     background: url('../images/bg.svg');
-    
+    // position: relative;
+    padding-bottom: 25px;
 }
 
 .heading {
@@ -19,7 +21,8 @@
     text-align: center;
     color: white;
     margin: 1.5%;
-    font-size: 24pt;
+    // font-size: 24pt;
+    font-size: 170%;
 }
 
 .listbox {
@@ -32,9 +35,10 @@
     border-radius: 5px;
     font-size: 20px;
     box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+    z-index: 1;
 }
 
-.listbox > span {
+.taskItem {
     display: flex;
     align-items: center;
     margin: 10px;
@@ -47,11 +51,29 @@
 }
 
 .checkbox { 
-    margin-right: 30px !important;
+    margin-right: 20px !important;
+    user-select:none;
 }
 
 .checkbox:hover {
     background: none !important;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.compose input[type=text] {
+    border: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+    font-size: 18pt; 
+    width: 75%;
+}
+
+.compose input[type=text]:focus {
+    outline: 1px solid black;
 }
 
 .compose {
@@ -60,25 +82,13 @@
     justify-content: space-between;
 }
 
-.compose input[type=text] {
-    border: none;
-    border-bottom: 2px solid black;
-    text-align: center;
-    font-size: 18pt; 
-    width: 70%;
-}
-
-.compose input[type=text] {
-    outline: none;
-}
-
 .addbutton {
     background: #8f0d0d !important;
     color: white !important;
 }
 
 .delbutton { 
-    opacity: 0.1;
+    opacity: 0.2;
     position: absolute;
     right: 10px;    
 }
@@ -89,21 +99,53 @@
 }
 
 .empty {
+    @extend .taskItem;
     justify-content: center;
+    padding-bottom: 25px;
+}
+
+.done {
+    @extend .taskItem;
+}
+
+.done > .textfield {
+    text-decoration: line-through;
+}
+
+.textfield {
+    width: 50%;
+    font: 200 12pt "Segoe UI";
+    background: none;
+    border: none;
+    outline: none;
+    padding: 5px 0 5px 5px; 
+}
+
+.edit__mode {
+    @extend .textfield;
+    border: none;
+    background: white;
+    border-bottom: solid 1px black;
+    text-decoration: none !important;
+}
+
+.edit__button {
+    @extend .delbutton;
+    right: 40px;
 }
 
 @media only screen and (min-width: 768px) {
-    .heading, .listbox, .footer {
-        transform-origin: top;
-        transform: scale(1.2);
+    .container {
+        transform-origin: center top;
+        transform: scale(1.15);
     }
 
-    .heading {
-        margin-bottom: 75px;
-    }
-    
     .listbox {
-        margin-bottom: 100px;  
-        padding: 10px 20px;      
+        width: 500px;
+    }
+
+    .textfield {
+        width: 70%;
+        font-size: 20pt;
     }
 }

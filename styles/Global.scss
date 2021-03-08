@@ -1,7 +1,9 @@
 html, body{
     margin: 0;
     padding: 0;
-    background-color: #f2f5ff; 
+    background: #f2f5ff;
     min-height: 100vh;
+    height: 100%;
     font-family: "Segoe UI", Arial, sans-serif;
-}
+    overflow-x: hidden;
+} 

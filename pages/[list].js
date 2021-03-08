@@ -13,15 +13,15 @@ export default function List({ page, data }) {
 
     const [list, setList] = useState(JSON.parse(data));
 
-    const [input, setInput] = useState({ name: "", done: false }); 
+    const [input, setInput] = useState({ name: "", done: false, category: page }); 
 
     const [editMode, setEditMode] = useState(Array(list.length).fill(false));
 
     return (
         <div className={styles.container}>
 
-             <div className={styles.heading}>
-              <h1 className={styles.date}>{new Date().toLocaleDateString("en-US", {weekday: 'long', day: 'numeric', month: 'long'})}</h1>
+            <div className={styles.heading}>
+                <h1 className={styles.date}>{_.upperFirst(page)} List</h1>
             </div>
 
             <div className={styles.listbox}>
@@ -59,7 +59,7 @@ export default function List({ page, data }) {
     
         if (input && input.name.trim().length) {
             setList([...list, {...input, name: input.name.trim()}]);
-            setInput({ name: "", done: false });
+            setInput({ name: "", done: false, category: page });
 
             axios.post("/api/save", { task: input, list: page })
                  .then(({ data: { list } }) => setList(list))
@@ -113,13 +113,15 @@ export default function List({ page, data }) {
     }
 }
 
-export async function getServerSideProps(context) { 
+export async function getServerSideProps(context) {
 
-  let data = await Item.find({ category: null });
+    const { query: { list: page } } = context;
 
-  data = JSON.stringify(data);
+    let data = await Item.find({ category: page });
 
-  return {
-      props: { page: null, data }
-  }
+    data = JSON.stringify(data);
+
+    return {
+        props: { page, data }
+    }
 }
